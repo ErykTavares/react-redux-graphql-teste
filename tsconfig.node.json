@@ -1,0 +1,22 @@
+{
+	"compilerOptions": {
+		"jsx": "react",
+		"composite": true,
+		"tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
+		"skipLibCheck": true,
+		"module": "ESNext",
+		"moduleResolution": "bundler",
+		"allowSyntheticDefaultImports": true,
+		"strict": true,
+		"noEmit": true,
+		"baseUrl": "./",
+		"paths": {
+			"@/*": ["./src/*"],
+			"@components/*": ["./src/components/*"],
+			"@screens/*": ["./src/screens/*"],
+			"@shared/*": ["./src/shared/*"],
+			"@styles/*": ["./src/assets/styles/*"]
+		}
+	},
+	"include": [".", "src", "./src", "**/*.ts", "**/*.tsx", "vitest.config.ts"]
+}
