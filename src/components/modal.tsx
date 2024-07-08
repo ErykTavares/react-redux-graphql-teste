@@ -3,7 +3,7 @@ import { RootState } from '@/store/store';
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-const Modal: React.FC = () => {
+const Modal = () => {
 	const modalRef = useRef<HTMLDialogElement>(null);
 	const dispatch = useDispatch();
 	const selectedRepo = useSelector((state: RootState) => state.repos.selectedRepo);
