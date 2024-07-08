@@ -3,17 +3,15 @@ import { Provider } from 'react-redux';
 
 import { store } from './store/store';
 import List from '@components/list';
-import Modal from '@components/modal';
 import Header from '@/components/header';
 
 function App() {
 	return (
 		<Provider store={store}>
-			<main className='flex-1'>
+			<main className='w-full h-screen'>
 				<Header />
-				<section className='flex-1'>
+				<section className='w-full h-[100%]'>
 					<List />
-					<Modal />
 				</section>
 			</main>
 		</Provider>
