@@ -1,19 +1,18 @@
 import React from 'react';
 
-interface ListCardProps extends Repository.Repository {
+interface ListCardProps {
+	data: Repository.Repository;
 	setRepository: (repository: Repository.Repository) => {
 		payload: Repository.Repository;
 		type: 'repos/selectRepo';
 	};
 }
 
-const ListCard = ({ name, description, owner, setRepository }: ListCardProps) => {
+const ListCard = ({ data, setRepository }: ListCardProps) => {
+	const { name, owner, description } = data;
 	const handleOnClick = () => {
-		setRepository({
-			name,
-			description,
-			owner,
-		});
+		console.log('click');
+		setRepository(data);
 	};
 
 	return (

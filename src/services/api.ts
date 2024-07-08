@@ -23,6 +23,23 @@ export const fetchRepos = createAsyncThunk('repos/fetchRepos', async (repoName: 
 								login
 							}
 							description
+							stargazerCount
+							forkCount
+							issues(states: OPEN) {
+								totalCount
+							}
+							pullRequests(states: OPEN) {
+								totalCount
+							}
+							defaultBranchRef {
+								target {
+									... on Commit {
+										history {
+											totalCount
+										}
+									}
+								}
+							}
 						}
 					}
 				}

@@ -1,24 +1,31 @@
 declare namespace Repository {
 	interface Repository {
 		name: string;
-		owner: {
-			login: string;
-		};
+		owner: Owner;
 		description: string | null;
+		stargazerCount: number;
+		forkCount: number;
+		issues: {
+			totalCount: number;
+		};
+		pullRequests: {
+			totalCount: number;
+		};
+		defaultBranchRef: {
+			target: {
+				history: {
+					totalCount: number;
+				};
+			};
+		};
 	}
 
 	interface Owner {
 		login: string;
 	}
 
-	interface Repo {
-		name: string;
-		owner: Owner;
-		description: string | null;
-	}
-
 	interface Edge {
-		node: Repo;
+		node: Repository;
 	}
 
 	interface SearchResponse {

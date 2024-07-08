@@ -8,6 +8,7 @@ import { AppDispatch, RootState } from '@/store/store';
 import { selectRepo } from '@/store/repoSlice';
 import useDebounce from '@/hooks/useDebounce';
 import ListCard from '@/components/listCard';
+import Modal from './modal';
 
 const List = () => {
 	const dispatch = useDispatch<AppDispatch>();
@@ -35,8 +36,6 @@ const List = () => {
 	useEffect(() => {
 		getReposList();
 	}, [getReposList]);
-
-	console.log(repos);
 
 	return (
 		<section className='w-full h-auto p-5'>
@@ -80,11 +79,12 @@ const List = () => {
 				{repos?.map((repo) => (
 					<ListCard
 						key={`${repo.name} ${repo.description}`}
-						{...repo}
+						data={repo}
 						setRepository={handleSetRepository}
 					/>
 				))}
 			</div>
+			<Modal />
 		</section>
 	);
 };
