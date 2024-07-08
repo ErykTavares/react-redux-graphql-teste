@@ -11,6 +11,7 @@ interface ListCardProps {
 const ListCard = ({ data, setRepository }: ListCardProps) => {
 	const { name, owner, description } = data;
 	const handleOnClick = () => {
+		console.log('click');
 		setRepository(data);
 	};
 
