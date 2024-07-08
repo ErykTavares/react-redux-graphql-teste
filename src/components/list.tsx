@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -6,6 +6,8 @@ import { Controller, useForm } from 'react-hook-form';
 import { fetchRepos } from '@/services/api';
 import { AppDispatch, RootState } from '@/store/store';
 import { selectRepo } from '@/store/repoSlice';
+import useDebounce from '@/hooks/useDebounce';
+import ListCard from '@/components/listCard';
 
 const List = () => {
 	const dispatch = useDispatch<AppDispatch>();
@@ -17,43 +19,73 @@ const List = () => {
 			search: '',
 		},
 	});
+	const debounce = useDebounce(watch('search'), 500);
 
-	const handleSearch = useCallback(() => {
-		return dispatch(fetchRepos(watch('search')));
-	}, [watch, dispatch]);
+	const handleSetRepository = useCallback(
+		(repository: Repository.Repository) => {
+			return dispatch(selectRepo(repository));
+		},
+		[dispatch],
+	);
+
+	const getReposList = useCallback(() => {
+		return dispatch(fetchRepos(debounce));
+	}, [debounce, dispatch]);
+
+	useEffect(() => {
+		getReposList();
+	}, [getReposList]);
+
+	console.log(repos);
 
 	return (
-		<div>
-			<div className='col-12 row my-2'>
+		<section className='w-full h-auto p-5'>
+			<div className='w-full'>
 				<Controller
 					render={({ field: { name, onChange, value, ref } }) => (
-						<input
-							ref={ref}
-							type='text'
-							value={value}
-							onChange={onChange}
-							name={name}
-							placeholder='Buscar Repositorios'
-						/>
+						<label className='input input-bordered flex items-center gap-2'>
+							<input
+								ref={ref}
+								className='grow'
+								type='text'
+								value={value}
+								onChange={onChange}
+								name={name}
+								placeholder='Buscar Repositorios'
+							/>
+							<svg
+								xmlns='http://www.w3.org/2000/svg'
+								viewBox='0 0 16 16'
+								fill='currentColor'
+								className='h-4 w-4 opacity-70'>
+								<path
+									fillRule='evenodd'
+									d='M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z'
+									clipRule='evenodd'
+								/>
+							</svg>
+						</label>
 					)}
 					name='search'
 					control={control}
 				/>
 			</div>
-			<button onClick={handleSearch}>Search</button>
+			{loading ? (
+				<div className='w-full flex items-center justify-center my-2'>
+					<span className='loading loading-spinner loading-lg text-info'></span>
+				</div>
+			) : null}
 
-			{loading && <p>Loading...</p>}
-
-			<ul>
+			<div className='w-full flex flex-col items-center justify-center p-2'>
 				{repos?.map((repo) => (
-					<li key={repo.name} onClick={() => dispatch(selectRepo(repo))}>
-						<h3>{repo.name}</h3>
-						<p>{repo.owner.login}</p>
-						<p>{repo.description}</p>
-					</li>
+					<ListCard
+						key={`${repo.name} ${repo.description}`}
+						{...repo}
+						setRepository={handleSetRepository}
+					/>
 				))}
-			</ul>
-		</div>
+			</div>
+		</section>
 	);
 };
 

@@ -14,7 +14,7 @@ export const fetchRepos = createAsyncThunk('repos/fetchRepos', async (repoName: 
 
 	const query = gql`
 		query ($repoName: String!) {
-			search(query: $repoName, type: REPOSITORY, first: 10) {
+			search(query: $repoName, type: REPOSITORY, first: 100) {
 				edges {
 					node {
 						... on Repository {
