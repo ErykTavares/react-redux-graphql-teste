@@ -20,7 +20,7 @@ const List = () => {
 
 	const handleSearch = useCallback(() => {
 		return dispatch(fetchRepos(watch('search')));
-	}, [watch('search')]);
+	}, [watch, dispatch]);
 
 	return (
 		<div>
@@ -46,7 +46,7 @@ const List = () => {
 
 			<ul>
 				{repos?.map((repo) => (
-					<li key={repo.name}  onClick={() => dispatch(selectRepo(repo))}>
+					<li key={repo.name} onClick={() => dispatch(selectRepo(repo))}>
 						<h3>{repo.name}</h3>
 						<p>{repo.owner.login}</p>
 						<p>{repo.description}</p>

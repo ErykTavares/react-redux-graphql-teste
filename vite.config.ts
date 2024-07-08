@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react';
 import eslintPlugin from '@nabla/vite-plugin-eslint';
 import path from 'path';
 import tsconfigPaths from 'vite-tsconfig-paths';
+import tailwindcss from 'tailwindcss';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -22,6 +23,11 @@ export default defineConfig({
 			'@screens': `${path.resolve(__dirname, './src/screens/')}`,
 			'@shared': `${path.resolve(__dirname, './src/shared/')}`,
 			'@styles': `${path.resolve(__dirname, './src/styles/')}`,
+		},
+	},
+	css: {
+		postcss: {
+			plugins: [tailwindcss()],
 		},
 	},
 	envDir: './',
